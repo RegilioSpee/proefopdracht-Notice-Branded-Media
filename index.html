@@ -1,12 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proefopdracht Notice Branded Media</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+	<script src="js/script.js"></script> 
+	<title>Notice Branded Media - Opdracht</title>
 </head>
-<body>
-    
+<body onload="initClock()">
+	<!-- Script van internet voor digitale tijd begin -->
+	<script type="text/javascript">
+		function updateClock(){
+		  var now = new Date();
+		  var dname = now.getDay(),
+			  mo = now.getMonth(),
+			  dnum = now.getDate(),
+			  yr = now.getFullYear(),
+			  hou = now.getHours(),
+			  min = now.getMinutes(),
+			  sec = now.getSeconds(),
+			  pe = "AM";
+			  
+			  if(hou >= 12){
+				pe = "PM";
+			  }
+			  if(hou == 0){
+				hou = 12;
+			  }
+			  if(hou > 12){
+				hou = hou - 12;
+			  }
+	
+			  Number.prototype.pad = function(digits){
+				for(var n = this.toString(); n.length < digits; n = 0 + n);
+				return n;
+			  }
+	
+			  var months = ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"];
+			  var week = ["Zondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"];
+			  var ids = ["dayname", "month", "daynum", "year", "hour", "minutes", "seconds", "period"];
+			  var values = [week[dname], months[mo], dnum.pad(2), yr, hou.pad(2), min.pad(2), sec.pad(2), pe];
+			  for(var i = 0; i < ids.length; i++)
+			  document.getElementById(ids[i]).firstChild.nodeValue = values[i];
+		}
+	
+		function initClock(){
+		  updateClock();
+		  window.setInterval("updateClock()", 1);
+		}
+		</script>
+		<!-- Script van internet voor digitale tijd eind -->
+		<!-- Digitale tijd begin -->
+	  <div class="datetime">
+		<h1><span class="yellow">DEPARTURES</span></h1>
+		  <div class="date">
+			<span id="dayname">Day</span>,
+			<span id="daynum">00</span>
+			<span id="month">Month</span>,
+			<span id="year">Year</span>
+		  </div>
+		  <br>
+		  <div class="time">
+			<span id="hour">00</span>:
+			<span id="minutes">00</span>:
+			<span id="seconds">00</span>
+			<span id="period">AM</span>
+		  </div>
+		</div>
+		<!-- Digitale tijd eind -->
+	<table class="table table-dark table-hover">
+		<tr class="bg-info">
+			<th> | TIME</th>
+			<th> | DESTINATION</th>
+			<th> | FLIGHT</th>
+			<th> | GATE</th>
+			<th> | STATUS</th>
+		</tr>
+	
+		<tbody id="myTable">
+			
+		</tbody>
+	</table>
+	<!-- Array script begin -->
+	<script type="text/javascript">
+		var myArray = [
+			{'time':'17:06', 'destination':'AMSTERDAM', 'flight':'SA 608', 'gate':'19', 'status':'<p class="text-success">BOARDING</p>'},
+			{'time':'18:15', 'destination':'SINGAPORE', 'flight':'LU 811', 'gate':'7', 'status':'<p class="text-danger">GATE CLOSING</p>'},
+			{'time':'19:10', 'destination':'PARIS', 'flight':'FR 1011', 'gate':'2', 'status':'ON TIME'},
+			{'time':'20:01', 'destination':'MADRID', 'flight':'ES 7182', 'gate':'1', 'status':'<p class="text-danger">DELAYED</p>'},
+			{'time':'20:44', 'destination':'ROME', 'flight':'IT 5556', 'gate':'5', 'status':'<p class="text-danger">CANCELLED</p>'},
+			{'time':'22:31', 'destination':'HONG KONG', 'flight':'HK 3300', 'gate':'7', 'status':'<p class="text-success">BOARDING</p>'},
+		]
+		for (i = 0; i < myArray.length; i += 1){
+     console.log(myArray[i]);
+ }
+		buildTable(myArray)
+	
+	
+	
+		function buildTable(data){
+			var table = document.getElementById('myTable')
+	
+			for (var i = 0; i < data.length; i++){
+				var row = `<table class="container"><tbody><tr>
+								<td>${data[i].time}</td>
+								<td>${data[i].destination}</td>
+								<td>${data[i].flight}</td>
+								<td>${data[i].gate}</td>
+								<td>${data[i].status}</td>
+						  </tr></tbody></table>`
+				table.innerHTML += row
+			}
+		}
+	
+	</script>
+	<!-- Array script eind -->
 </body>
 </html>
